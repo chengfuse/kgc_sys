@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--mybatis运行行为-->
+    <settings>
+        <setting name="logImpl" value="LOG4j"/>
+        <!--        设置自动映射行为，默认值：PATIAL-->
+<!--        <setting name="autoMappingBehavior" value="FULL"/>-->
+    </settings>
+
+    <!--配置别名-->
+    <typeAliases>
+        <package name="cn.kgc.pojo"/>
+    </typeAliases>
+</configuration>

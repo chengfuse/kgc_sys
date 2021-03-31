@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kgc.dao.KgcMenuMapper">
+    <!--根据用户ID查询菜单-->
+    <select id="queryMenuList"  resultMap="menuList">
+       SELECT p.id,p.menuName,p.menuUrl,c.id cId,c.menuName cName,c.menuUrl cUrl
+       FROM kgc_menu p,kgc_menu c WHERE p.id = c.parent AND p.status=0 AND c.status=0
+       <if test="userId !=null and userId !=0">
+           and c.id IN (SELECT menuId FROM kgc_user_menu WHERE userId= #{userId})
+       </if>
+    </select>
+    <resultMap id="menuList" type="KgcMenu">
+        <result property="id" column="id"/>
+        <result property="menuUrl" column="menuUrl"/>
+        <result property="menuName" column="menuName"/>
+        <collection property="childMenu"  column="parent" ofType="KgcMenu">
+            <result property="id" column="cId"/>
+            <result property="menuName" column="cName"/>
+            <result property="menuUrl" column="cUrl"/>
+        </collection>
+    </resultMap>
+
+
+
+    <!--根据parent、kgc_user_menu查询的结果集ids 查询子菜单-->
+<!--    <select id="childMenuList" resultType="KgcMenu">-->
+<!--        select id,menuName,menuUrl,parent from kgc_menu where parent = #{id} and id in-->
+<!--        <foreach collection="array" item="ids" open="(" separator="," close=")">-->
+<!--              #{ids}-->
+<!--        </foreach>-->
+<!--        and status =0-->
+<!--    </select>-->
+</mapper>
